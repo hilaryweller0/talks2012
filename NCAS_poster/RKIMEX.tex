@@ -1,0 +1,69 @@
+\begin{slide}
+\heading{Runge-Kutta IMEX schemes time-stepping schemes}
+
+IMEX: Implicit/Explicit. In order to solve:
+
+\begin{center}
+\begin{tabular}{ccccc}
+$\frac{dy}{dt}$ & $=$ & $s(y)$ & $+$ & $\color{red}f(y)$\\
+                &     & slow &     & \color{red}fast
+\end{tabular}
+\end{center}
+from time step $n$ to $n+1$. \pauseHS
+Take $\nu$ intermediate steps (from $i=1:\nu$)
+\begin{center}
+$y^i = y^n + \Delta t \sum_{j=1}^{i-1} \tilde{a}_{ij} s(y^j)
+           + \Delta t \sum_{j=1}^{i} a_{ij} \color{red}f(y^j)$
+\end{center}\pauseHS
+Then finally:
+\begin{center}
+$y^{n+1} = y^n + \Delta t \sum_{i=1}^{\nu} \tilde{b}_{i} s(y^i)
+               + \Delta t \sum_{i=1}^{\nu} b_{i} \color{red}f(y^i)$
+\end{center}
+\pauseHS
+Runge-Kutta IMEX schemes are defined by a double Butcher tableau:
+
+\ \\
+\begin{tabular}{c|cccccccc}
+$\tilde{c}_1$& 0 & 0 & $\cdots$ & 0 & 0 & $\cdots$ & 0 & 0\\
+$\tilde{c}_2$& $\tilde{a}_{21}$ & 0 & $\cdots$ & 0 & 0 & $\cdots$ & 0 & 0\\
+$\vdots$& $\vdots$ &  & & $\vdots$& $\vdots$ & & $\vdots$ & $\vdots$\\
+$\tilde{c}_i$& $\tilde{a}_{i1}$ & $\tilde{a}_{i2}$ & $\cdots$ & $\tilde{a}_{ii-1}$ & 0 & $\cdots$ & 0 & 0\\
+$\vdots$& $\vdots$ & $\vdots$ & & $\vdots$ & & & & $\vdots$\\
+$\tilde{c}_\nu$& $\tilde{a}_{\nu 1}$ & $\tilde{a}_{\nu 2}$ & $\cdots$ & $\tilde{a}_{\nu j-1}$ & $\tilde{a}_{\nu j}$ & $\cdots$ & $\tilde{a}_{\nu\nu-1}$ & 0\\
+\hline
+& $\tilde{b}_1$ & $\tilde{b}_2$ & $\cdots$ & $\tilde{b}_{j-1}$ & $\tilde{b}_j$ & $\cdots$ & $\tilde{b}_{\nu-1}$ & $\tilde{b}_\nu$\\
+\end{tabular}
+\hspace{1cm}
+\begin{tabular}{c|cccccccc}
+$c_1$& {\color{red} $a_{11}$} & 0 & $\cdots$ & 0 & 0 & $\cdots$ & 0 & 0\\
+$c_2$& ${a}_{21}$ & {\color{red} $a_{22}$} & $\cdots$ & 0 & 0 & $\cdots$ & 0 & 0\\
+$\vdots$& $\vdots$ &  & & $\vdots$& $\vdots$ & & $\vdots$ & $\vdots$\\
+$c_i$& ${a}_{i1}$ & ${a}_{i2}$ & $\cdots$ & ${a}_{ii-1}$ & {\color{red} $a_{ii}$} & $\cdots$ & 0 & 0\\
+$\vdots$& $\vdots$ & $\vdots$ & & $\vdots$ & & & & $\vdots$\\
+$c_\nu$& ${a}_{\nu 1}$ & ${a}_{\nu 2}$ & $\cdots$ & ${a}_{\nu j-1}$ & ${a}_{\nu j}$ & $\cdots$ & ${a}_{\nu\nu-1}$ & {\color{red} $a_{\nu\nu}$}\\
+\hline
+& ${b}_1$ & ${b}_2$ & $\cdots$ & ${b}_{j-1}$ & ${b}_j$ & $\cdots$ & ${b}_{\nu-1}$ & ${b}_\nu$\\
+\end{tabular}
+\end{slide}
+
+\begin{slide}
+\heading{Some Runge-Kutta IMEX schemes}
+
+\ \\
+\includegraphics{RKIMEXschemes.pdf}
+
+\ \\
+SSP -- strong stability preserving (from Pareschi and Russo, 2005)
+\end{slide}
+
+\begin{slide}
+\heading{Comparison of RK IMEX shemes after 33.3 days}
+
+\ \\ \ \\
+Normalised RMS bouyancy error versus time step (s) simulating the near hydrostatic  Durran and Blossey (2012) gravity-wave generator in a vertical slice using the compressible Boussinesq equations
+\ \\ \ \\
+\includegraphics{RKresults.pdf}
+
+\end{slide}
+

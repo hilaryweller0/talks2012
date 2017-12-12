@@ -1,0 +1,51 @@
+\begin{slide}
+
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{minipage}{0.45\linewidth}
+\heading{Time Splitting}
+
+\begin{list0}
+\item Explicit Runge-Kutta for slow terms
+\item Crank-Nicolson for fast terms
+\end{list0}
+\pauseHS
+\centerline{\bf Explicit, then implicit}
+\begin{tabular}{c|ccccc cc|ccccc}
+0 & 0 & 0 & 0 & 0 & 0 &  & 0 & 0 & 0 & 0 & 0 & 0\\
+\hfrac{1}{3} & \hfrac{1}{3} & 0 & 0 & 0 & 0 &  & 0 & 0 & 0 & 0 & 0 & 0\\
+\half & 0 & \half & 0 & 0 & 0 &  & 0 & 0 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 1 & 0 & 0 & & 0 & 0 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 1 & 0 & 0 &  & 1 & 0 & 0 & 0 & \half & \half\\
+\cline{1-6} \cline{8-13}
+ & 0 & 0 & 1 & 0 & 0 &  &  & 0 & 0 & 0 & \half & \half\\
+\end{tabular}
+\pauseHS
+\includegraphics[scale=0.6]{\HOME/projects/gungHo/IMEXRK/octave/RK3_CN0.pdf}
+\end{minipage}
+\pauseHS
+\begin{minipage}{0.53\linewidth}\centering
+{\bf Implicit, explicit, implicit (Strang Splitting)}\\
+\begin{tabular}{c|cccccc cc|cccccc}
+0 & 0 & 0 & 0 & 0 & 0 & 0 &  & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 &  & \half & \hfrac{1}{4} & \hfrac{1}{4} & 0 & 0 & 0 & 0\\
+\hfrac{1}{3} & 0 & \hfrac{1}{3} & 0 & 0 & 0 & 0 &  & \half & \hfrac{1}{4} & \hfrac{1}{4} & 0 & 0 & 0 & 0\\
+\half & 0 & 0 & \half & 0 & 0 & 0 &  & \half & \hfrac{1}{4} & \hfrac{1}{4} & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 1 & 0 & 0 &  & \half & \hfrac{1}{4} & \hfrac{1}{4} & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 1 & 0 & 0 &  & 1 & \hfrac{1}{4} & \hfrac{1}{4} & 0 & 0 & \hfrac{1}{4} & \hfrac{1}{4}\\
+\cline{1-7} \cline{9-15}
+ & 0 & 0 & 0 & 1 & 0 & 0 &  &  & \hfrac{1}{4} & \hfrac{1}{4} & 0 & 0 & \hfrac{1}{4} & \hfrac{1}{4}\\
+\end{tabular}
+\pauseHS
+\includegraphics[scale=0.6]{\HOME/projects/gungHo/IMEXRK/octave/CN_RK3_CN.pdf}
+\pauseHS
+\begin{list0}
+\item Retains properties of individual schemes
+\item Splitting errors
+\end{list0}
+
+\end{minipage}
+
+\end{slide}
+

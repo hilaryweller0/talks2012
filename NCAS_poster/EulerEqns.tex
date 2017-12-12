@@ -1,0 +1,28 @@
+\begin{slide}
+\heading{Semi-implicit Solution of Euler Equations}
+\input{EulerEqns_SI}
+
+\begin{tabular}{lcl}
+slow &:& treat explicitly\\
+fast &:& treat implicitly\\
+medium &:& for treating gravity waves implicitly\\
+\end{tabular}
+
+Combine equations into one Helmholtz equation to be solved using iterative, sparse matrix solver
+
+\end{slide}
+
+\begin{slide}
+\heading{HEVI Solution of Euler Equations}
+\input{EulerEqns_HEVI}
+
+\begin{tabular}{lcl}
+slow &:& treat explicitly\\
+fast &:& treat implicitly\\
+medium &:& for treating gravity waves implicitly\\
+\end{tabular}
+
+Combine equations into one Helmholtz equation for each column of the grid
+
+\end{slide}
+

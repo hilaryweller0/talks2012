@@ -1,0 +1,38 @@
+\begin{slide}
+\heading{Crank-Nicolson with Initial Explicit Predictors}
+
+\ \\
+\begin{minipage}{0.48\linewidth}\centering
+{\bf Initial split stage}
+
+\ \\
+\begin{tabular}{c|cccc cc|cccc}
+0& 0& 0&0&0& \hspace{3ex}&0& 0& 0&0&0\\
+1 & 1 &0 &0&0 && 0& 0 &0&0&0\\
+1 & \half & \half & 0&0 && 1 & \half & 0 & \half&0 \\
+1 & \half & 0 & \half & 0 && 1 & \half & 0 & 0 & \half \\
+\cline{1-5} \cline{7-11}
+ & \half & 0 & \half & 0 &&  & \half & 0 & 0 & \half \\
+\end{tabular}
+\end{minipage}
+\pauseHS
+\begin{minipage}{0.48\linewidth}\centering
+{\bf Initial explicit fast terms}
+
+\ \\
+\begin{tabular}{c|cccc cc|cccc}
+0& 0& 0&0&0& \hspace{3ex}&0& 0& 0&0&0\\
+1 & 1 &0 &0&0 && 1& 1 &0&0&0\\
+1 & \half & \half & 0&0 && 1 & \half & 0 & \half&0 \\
+1 & \half & 0 & \half & 0 && 1 & \half & 0 & 0 & \half \\
+\cline{1-5} \cline{7-11}
+ & \half & 0 & \half & 0 &&  & \half & 0 & 0 & \half \\
+\end{tabular}
+\end{minipage}
+\pauseHS
+\includegraphics[width=0.48\linewidth]{\HOME/projects/gungHo/IMEXRK/octave/ENDG1_RK2_CN.pdf}
+\includegraphics[width=0.48\linewidth]{\HOME/projects/gungHo/IMEXRK/octave/ENDG1_RK2_CN11m1.pdf}
+
+
+\end{slide}
+

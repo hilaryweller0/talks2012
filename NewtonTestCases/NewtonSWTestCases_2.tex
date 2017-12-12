@@ -1,0 +1,265 @@
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt,english]{article}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,footskip=1cm}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[pdftex]{graphicx}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% Uncomment to print out only slides and overlays
+%
+%\onlyslides{\slides}
+
+% Uncomment to print out only notes
+%
+%\onlynotes{\notes}
+
+
+\newcommand{\nicefrac}[2]{\ensuremath ^{#1}\!\!/\!_{#2}}
+\usepackage { fancybox}
+\usepackage{tweaklist}
+\renewcommand{\itemhook}
+{
+    \setlength{\topsep}{2pt}
+    \setlength{\parsep}{2pt}
+    \setlength{\itemsep}{2pt}
+    \setlength{\labelwidth}{1ex}
+    \setlength{\leftmargin}{3ex}
+    \raggedright
+}
+\usepackage[pdftex]{graphicx,color}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\title{Shallow Water Test Cases with Static Refinement}
+
+
+\author{Hilary Weller <h.weller@reading.ac.uk>}
+
+
+\date{4/10/12}
+
+\maketitle
+
+\section{Definition of Resolution and Refinement\label{sec:rhoDefn}}
+\begin{itemize}
+\item The mesh density is defined as $\rho=\frac{\text{dof}}{3A}$ where
+dof is the total number of degrees of freedom of the shallow water
+model over a region with area $A$. The factor of 3 is because dof
+includes all velocity and height degrees of freedom, so dividing dof
+by $3A$ to give $\rho$ gives approximate grid points per unit area.
+Therefore $1/\sqrt{\rho}$ is the equivalent mesh spacing.
+\item A region refined a factor of $k$ will have $\rho_{r}=k^{2}\rho_{c}$
+where $\rho_{c}$ is the mesh density in the coarse region
+\end{itemize}
+
+\section{Test Case on a Plane}
+
+Non-linear shallow water equations on a $\beta$ plane: (advective
+form but model dependent)
+\begin{eqnarray*}
+\frac{\partial u}{\partial t}+\mathbf{u}\cdot\nabla u & = & \phantom{+}fv-g\frac{\partial h}{\partial x}\\
+\frac{\partial v}{\partial t}+\mathbf{u}\cdot\nabla v & = & -fu-g\frac{\partial h}{\partial y}\\
+\frac{\partial h}{\partial t}+\mathbf{u}\cdot\nabla h & + & h\nabla\cdot\mathbf{u}=0
+\end{eqnarray*}
+where $u$ and $v$ and the velocities in the $x$ and $y$ directions,
+$\mathbf{u}=\left(\begin{array}{c}
+u\\
+v
+\end{array}\right)$, $h$ is the shallow water height and $f=\beta y$ is the Coriolis
+and $g$ is the acceleration due to gravity.
+
+
+\subsection*{Analytic solution: a geostrophically balanced, compact jet}
+
+\begin{eqnarray*}
+u(\hat{y}) & = & \begin{cases}
+u_{0}\left(1-3\hat{y}^{2}+3\hat{y}^{4}-\hat{y}^{6}\right) & \text{for }-1\le\hat{y}\le1\\
+0 & \text{otherwise}
+\end{cases}\\
+v & = & 0\\
+h\left(\hat{y}\right) & = & \begin{cases}
+h_{0} & \textnormal{for }\hat{y}\le-1\\
+h_{0}-\frac{w\beta u_{0}}{g}\begin{array}[t]{l}
+\biggl\{ y_{c}\left(\frac{16}{35}+\hat{y}-\hat{y}^{3}+\frac{3}{5}\hat{y}^{5}-\frac{1}{7}\hat{y}^{7}\right)\\
++w\left(-\frac{1}{8}+\frac{1}{2}\hat{y}^{2}-\frac{3}{4}\hat{y}^{4}+\frac{1}{2}\hat{y}^{6}-\frac{1}{8}\hat{y}^{8}\right)\biggr\}
+\end{array} & \textnormal{for }-1\le\hat{y}\le1\\
+h_{0}-\frac{32}{35}\frac{w\beta u_{0}y_{c}}{g} & \textnormal{for }\hat{y}\ge1
+\end{cases}
+\end{eqnarray*}
+where $\hat{y}=\frac{y-y_{c}}{w}$, $y_{c}$ is the $y$ position
+of the jet centre, $w$ is the jet half width, $u_{0}$ is the maximum
+jet velocity and $h_{0}$ is the minimum height. The jet velocity
+and height as a function of $y$ using the parameter values in the
+table below are shown in figure 
+
+\begin{figure}
+\noindent \begin{centering}
+\includegraphics[width=0.75\textwidth]{figs/jetProfile}
+\par\end{centering}
+
+\caption{Profile of height, $h$, and velocity, $u$, in the geostrophically
+balanced jet}
+
+
+\end{figure}
+
+
+An analytic solution of the shallow water equations on a $\beta$
+plane consisting of a compact, zonal jet with zero first and second
+derivatives at the edges is given by:
+
+
+\subsection{Mesh and Problem specifications}
+
+\begin{tabular}{lc}
+$\hat{y}=\frac{y-y_{c}}{w}$ & \multirow{8}{*}{\input{figs/jet.pdf_t}}\tabularnewline
+$a=6\times10^{6}\text{m}$ & \tabularnewline
+$u_{0}=20\text{ms}^{-1}$ & \tabularnewline
+$y_{c}=a$ & \tabularnewline
+$w=\frac{a}{2}$ & \tabularnewline
+$g=10\text{ms}^{-2}$ & \tabularnewline
+$\beta=2\times10^{-11}\text{s}^{-1}\text{m}^{-1}$ & \tabularnewline
+$h_{0}=3000\text{m}$ & \tabularnewline
+\end{tabular}\vspace{6cm}
+
+\begin{itemize}
+\item The geometry is defined as in the above figure and goes from $x=0\rightarrow2a$
+and $y=0\rightarrow2a$. 
+\item The resolution must conform to two specifications, $\rho_{c}$, the
+mesh density in the coarse region and $\rho_{r}$, the mesh density
+in the refined region. The coarse region must include at least the
+region between $x=a/4$ and $x=3a/4$ for all $y$. The refined region
+must include at least the circle centered at $\left(3a/2,\ 3a/4\right)$with
+radius $a/4$.
+\item The refined region can be larger than this to allow for your refinement
+technique (ie blocks, unstructured, smooth etc) but the smoother you
+make it the more unnecessary degrees of freedom you will add.
+\item There should be four meshes for every resolution, with $\rho_{r}=k^{2}\rho_{c}$
+with $k=1,2,4$ and $8$.
+\item The standard resolution is $\rho_{c}=\frac{100\times100}{4a^{2}}$
+where $4a^{2}$ is the area of the domain.
+\item For convergence with resolution, value of $\rho_{c}$ of $\frac{24\times24}{4a^{2}}$,
+$\frac{50\times50}{4a^{2}}$, and $\frac{200\times200}{4a^{2}}$ should
+also be used.
+\item Cyclic in x direction
+\item No normal flow (slip walls) in y direction, ie $v=0$ $\implies\frac{\partial h}{\partial y}=-\frac{fu}{g}$
+at $y=0,\ 2a$
+\item The test case can be run on a uniform, aligned, orthogonal grid. This
+will give useful information about the impact of refinement. This
+should be compared with a grid designed to reflect the need to grid
+a sphere. Eg:
+
+\begin{itemize}
+\item non-orthogonal blocks with angles of up to $120^{o}$ (this can be
+done by moving the edge of a grid line up to $\frac{a}{2}\left(1+\frac{1}{2\sqrt{3}}\right)$
+and the centre of the same grid line down to $\frac{a}{2}\left(1-\frac{1}{2\sqrt{3}}\right)$.) 
+\item a mix of hexagons and pentagons and possibly other shapes
+\item triangles with 5 or 6 vertex neighbours
+\end{itemize}
+\item The simulation is run for $6\times10^{5}s$ (one complete revolution)
+\end{itemize}
+The initial conditions on the grid with $\rho_{c}=\frac{50\times50}{4a^{2}}$
+with $k=2$ are shown below (only every 25th vector is shown)
+
+\includegraphics[scale=0.7]{graphics/cubeSphere_r_50x50_0_hU}
+
+
+\section{Test Cases on the Sphere}
+\begin{itemize}
+\item \citet{WDH+92} test cases 2, 3 and 5 with and without a statically
+refined region
+\item The steady state test cases should be run for 12 days. The mountain
+test case should be run for 15 days
+\item The minimum size of the statically refined region is the mountain
+area from test case 5. 
+\item The mountain must be centered on a special point of the mesh (ie a
+cube corner, a pole of a rotated lat-log grid or a pentagon). This
+is probably not important, except for a lat-lon grid.
+\item The coarse region must cover at least the antipodal hemisphere to
+the mountain.
+\item The standard coarse resolution should be close to $\rho_{c}=\frac{10^{4}}{3\times4\pi a^{2}}$
+where $a$ is the radius of the earth (ie $10^{4}/3$ cells for a
+finite volume mesh with $k=1$, see definition of mesh density in
+section \ref{sec:rhoDefn})
+\item There should be four meshes for every resolution, with $\rho_{r}=k^{2}\rho_{c}$
+with $k=1,2,4$ and $8$.
+\item For convergence with resolution, values of $\rho_{c}$ of around $\frac{2\times10^{3}}{3\times4\pi a^{2}}$,
+$\frac{4\times10^{4}}{3\times4\pi a^{2}}$ and $\frac{2\times10^{5}}{3\times4\pi a^{2}}$
+should also be used.
+\end{itemize}
+
+\section{Diagnostics }
+\begin{itemize}
+\item Height, velocity and vorticity differences from the initial conditions
+(errors) should be plotted for the standard resolution for all values
+of $k$ at the end of the simulation. 
+\item For the standard resolutions for all values of $k$, the following
+global diagnostics should be graphed as a function of time for all
+time steps:
+
+\begin{itemize}
+\item Absolute values of normalised mass, energy, enstrophy and potential
+vorticity \citep[as defined by][]{WDH+92} with a log y-scale with
+negative values dashed
+\item For the steady state test cases, error norms $\ell_{2}(h)$, $\ell_{\infty}(h)$,
+$\ell_{2}(u)$ and $\ell_{\infty}(u)$ as defined by \citet{WDH+92}
+with a log y-scale
+\end{itemize}
+\item Graphs of $\ell_{2}(h)$, $\ell_{\infty}(h)$, $\ell_{2}(u)$ and
+$\ell_{\infty}(u)$ convergence with resolution. The graphs should
+be log-log and include lines showing typical convergence rates. Two
+forms should be presented, one with $1000/\sqrt{\rho_{c}}$ (in km)
+on the x-axis and the other with the total number of dofs on the x-axis.
+(The form with $1000/\sqrt{\rho_{c}}$ on the x-axis shows the affect
+of refinement on the accuracy, the form with dofs on the x-axis allows
+for comparison between methods with different mesh refinement strategies.)
+\end{itemize}
+
+\section{Summary of the Numerical Method}
+
+The salient points of the numerical method should be listed with references
+to more detailed descriptions. The summary should include the following:
+\begin{itemize}
+\item Form of the equations solved (ie flux, advective or vector invariant
+form)
+\item Discretisation type (eg finite element, discontinuous Galerkin, finite
+volume, spectral etc)
+\item Prognostic variables used and their placement on the mesh
+\item Number of degrees of freedom per element or stencil sizes for the
+operators
+\item Order of accuracy of the approximations for all of the spatial operators
+and special techniques for each operator
+\item Any limiters used
+\item Time-stepping schemes for each of the terms
+\item Time steps used for each term of the equations
+\item Maximum theoretical time-steps
+\item The size, number and condition number of any matrix solutions (eg
+mass matrices or linearised Helmholtz equations)
+\item The linear equation solvers and pre-conditioners
+\item Number of calls to the solvers per time step
+\item Typical number of iterations per solver call
+\end{itemize}
+\bibliographystyle{abbrvnat}
+\bibliography{numerics}
+
+\end{document}

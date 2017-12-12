@@ -1,0 +1,33 @@
+\begin{slide}
+\heading{Typical Maximum Courant numbers}
+
+Horizontal Courant number, $=c\frac{\Delta t}{\Delta x}$\\ \ \\
+Vertical Courant number,   $=c\frac{\Delta t}{\Delta z}$\\ \ \\
+where $c$ is the advection or wave speed \\ \ \\
+
+\begin{center}
+
+\begin{tabular}{cccc}
+Using typical values\pauseHS & $\Delta x =$ 15km, & $\Delta z =$ 200m, & $\Delta t =$ 3 mins
+\end{tabular}
+\ \\ \ \\
+
+\begin{tabular}{cc|ccc}
+Maximum &&  & \multicolumn{2}{c}{Courant numbers}\\
+ && $c$ & Horizontal & Vertical \\
+\hline
+horizontal wind: & $u$ & \pauseHS 80m/s & 1 & -- \\
+vertical wind:   & $w$ & \pauseHS 5m/s  & -- & 5 \\
+speed of sound:  & $c_s$ & \pauseHS 340m/s & 4 & 300 \\
+gravity waves:   & $c_g$ & \pauseHS 300m/s & 4 & -- 
+\end{tabular}
+
+\end{center}\pauseHS
+
+\begin{list0}
+\item So we only really need semi-implicit solution for vertically propagating sound waves\pauseHS
+\item HEVI: Horizontally Explicit, Vertically Implicit
+\end{list0}
+
+\end{slide}
+

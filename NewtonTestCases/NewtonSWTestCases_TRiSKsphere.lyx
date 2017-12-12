@@ -1,0 +1,1131 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass foils
+\begin_preamble
+% Uncomment to print out only slides and overlays
+%
+%\onlyslides{\slides}
+
+% Uncomment to print out only notes
+%
+%\onlynotes{\notes}
+
+\setlength\foilheadskip{-0.5in}
+\MyLogo{}
+
+\newcommand{\nicefrac}[2]{\ensuremath ^{#1}\!\!/\!_{#2}}
+\usepackage { fancybox}
+\usepackage{graphicx}
+\usepackage{tweaklist}
+\renewcommand{\itemhook}
+{
+    \setlength{\topsep}{2pt}
+    \setlength{\parsep}{2pt}
+    \setlength{\itemsep}{-4pt}
+    \setlength{\labelwidth}{1ex}
+    \setlength{\leftmargin}{3ex}
+    \raggedright
+}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation landscape
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1cm
+\topmargin 1cm
+\rightmargin 1cm
+\bottommargin 2cm
+\footskip 1cm
+\secnumdepth 1
+\tocdepth 1
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle foilheadings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Shallow Water Test Cases with Static Refinement
+\end_layout
+
+\begin_layout Author
+Sean Cavany and Hilary Weller
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+University of Reading
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+28/11/12
+\end_layout
+
+\begin_layout Foilhead
+Voronoi Meshes of the Sphere with Lloyd Refinement 
+\series medium
+\size normal
+(Ringler et al, 2011)
+\series default
+\size default
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=1$
+\end_inset
+
+ (642 cells, 2,562 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,015 km)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=2$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+640 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/sphereMeshes/Ringler/4x1/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/sphereMeshes/Ringler/5x2/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=4$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+876 km
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=8$
+\end_inset
+
+ (10,242 cells, 40,962 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+ 788 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/sphereMeshes/Ringler/5x4/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/sphereMeshes/Ringler/6x8/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Foilhead
+Voronoi Meshes of the Sphere with Schmidt Transforms
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=1$
+\end_inset
+
+ (642 cells, 2,562 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,077 km)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=2$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+839 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/4/k1/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/5/k2/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=4$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,258 km
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=8$
+\end_inset
+
+ (10,242 cells, 40,962 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+ 945 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/5/k4/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/6/k8/0/mesh.pdf
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Foilhead
+Height errors after 12 days (Williamson test case 2) with Lloyd
+\end_layout
+
+\begin_layout Standard
+Hexagonal C-grid - TRiSK (Ringler, Thuburn, Skamarock and Klemp, 2010)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=1$
+\end_inset
+
+ (642 cells, 2,562 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,015 km)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=2$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+640 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/4x1/save/APVM/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/5x2/save/APVM/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=4$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+876 km
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=8$
+\end_inset
+
+ (10,242 cells, 40,962 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+ 788 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/5x4/save/APVM/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/6x8/save/APVM/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/legends/hDiff40_hDiff.png
+	width 90text%
+
+\end_inset
+
+(m)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Foilhead
+Height errors after 12 days (Williamson test case 2) with Lloyd
+\end_layout
+
+\begin_layout Standard
+Weller and Cavany modifications
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=1$
+\end_inset
+
+ (642 cells, 2,562 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,015 km)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=2$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+640 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/4x1_noC/save/vanLeerVort/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/5x2_noC/save/vanLeerVort/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=4$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+876 km
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=8$
+\end_inset
+
+ (10,242 cells, 40,962 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+ 788 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/5x4_noC/save/vanLeerVort/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/6x8_noC/save/vanLeerVort/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/legends/hDiff40_hDiff.png
+	width 90text%
+
+\end_inset
+
+(m)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Foilhead
+Height errors after 12 days (Williamson test case 2) with Schmidt
+\end_layout
+
+\begin_layout Standard
+Weller and Cavany modifications
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=1$
+\end_inset
+
+ (642 cells, 2,562 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,077 km)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=2$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+839 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/4b/k1/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/5b/k2/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=4$
+\end_inset
+
+ (2,562 cells, 10,242 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+1,258 km
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $k=8$
+\end_inset
+
+ (10,242 cells, 40,962 dofs, 
+\begin_inset Formula $\Delta x_{\max}=$
+\end_inset
+
+ 945 km
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/5b/k4/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/6b/k8/1036800/hDiff40.png
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/legends/hDiff40_hDiff.png
+	width 90text%
+
+\end_inset
+
+(m)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Schmidt transformed
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lloyd refined
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/comparePlots/APVMpv_b_l2h_rhoc.pdf
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/comparePlots/APVM_noCvanLeerVort_l2h_rhoc.pdf
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/comparePlots/APVMpv_b_l2h_ndofs.pdf
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterSphere/WilliSteady/Sean/Ringler/comparePlots/APVM_noCvanLeerVort_l2h_ndofs.pdf
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,134 @@
+\begin{slide}
+\heading{Crank-Nicolson with non-linear terms lagged}
+
+\ \\
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{minipage}{0.24\linewidth}\centering
+{\bf 1 Iteration}\\
+
+\begin{tabular}{c|cc cc|cc}
+0& 0& 0& \hspace{2ex}&0& 0& 0\\
+1 & 1 &0 && 1& \half &\half\\
+\cline{1-3} \cline{5-7}
+&1 &0 &&& \half &\half
+\end{tabular}
+\end{minipage}
+\pauseHS
+\begin{minipage}{0.34\linewidth}\centering
+{\bf 2 Iterations}\\
+
+\begin{tabular}{c|ccc cc|ccc}
+0& 0& 0&0& \hspace{2ex}&0& 0& 0&0\\
+1 & 1 &0 &0 && 1& \half &\half&0\\
+1 & \half & \half & 0 && 1 & \half & 0 & \half \\
+\cline{1-4} \cline{6-9}
+&\half&\half &0 &&& \half &0&\half
+\end{tabular}
+\end{minipage}
+\pauseHS
+\begin{minipage}{0.4\linewidth}\centering
+{\bf 3 Iterations}\\
+
+\begin{tabular}{c|cccc cc|cccc}
+0& 0& 0&0&0& \hspace{2ex}&0& 0& 0&0&0\\
+1 & 1 &0 &0&0 && 1& \half &\half&0&0\\
+1 & \half & \half & 0&0 && 1 & \half & 0 & \half&0 \\
+1 & \half & 0 & \half & 0 && 1 & \half & 0 & 0 & \half \\
+\cline{1-5} \cline{7-11}
+ & \half & 0 & \half & 0 &&  & \half & 0 & 0 & \half \\
+\end{tabular}
+\end{minipage}
+\pauseHS
+\begin{minipage}{0.49\linewidth}
+\centerline{\bf Advantages\pauseHS}
+
+\begin{list0}
+\item No splitting \\(explicit and implicit sub-steps equal)\pauseHS
+\item Second-order accurate\pauseHS
+\item Stiffly accurate \\(bottom row same as row above)\pauseHS
+\end{list0}
+\end{minipage}
+%
+\begin{minipage}{0.49\linewidth}
+\centerline{\bf Disadvantages}\pauseHS
+\begin{list0}
+\item Lots of implicit steps for just 2nd order\pauseHS
+\item Unstable in lots of situations! ...
+\end{list0}
+\end{minipage}
+\end{slide}
+
+\begin{slide}
+\heading{Stability Analysis}\pauseHS
+
+\ \\
+
+Theoretical stability calculated by considering a solution of the linear (complex) system:
+\[\frac{dy}{dt} = -iSy - iFy\]
+\pauseHS
+And calculate the (complex) amplification factor between one time-step and the next:
+\[y^{n+1} = A y^n\]
+\pauseHS
+If $|A|>1$, scheme is unstable.\\
+If $|A|<1$, scheme is damping
+
+\end{slide}
+
+\begin{slide}
+\heading{Crank-Nicolson with non-linear terms lagged}
+
+\ \\
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{minipage}{0.24\linewidth}\centering
+{\bf 1 Iteration}\\
+
+\begin{tabular}{c|cc cc|cc}
+0& 0& 0& \hspace{2ex}&0& 0& 0\\
+1 & 1 &0 && 1& \half &\half\\
+\cline{1-3} \cline{5-7}
+&1 &0 &&& \half &\half
+\end{tabular}
+\end{minipage}
+%
+\begin{minipage}{0.34\linewidth}\centering
+{\bf 2 Iterations}\\
+
+\begin{tabular}{c|ccc cc|ccc}
+0& 0& 0&0& \hspace{2ex}&0& 0& 0&0\\
+1 & 1 &0 &0 && 1& \half &\half&0\\
+1 & \half & \half & 0 && 1 & \half & 0 & \half \\
+\cline{1-4} \cline{6-9}
+&\half&\half &0 &&& \half &0&\half
+\end{tabular}
+\end{minipage}
+%
+\begin{minipage}{0.4\linewidth}\centering
+{\bf 3 Iterations}\\
+
+\begin{tabular}{c|cccc cc|cccc}
+0& 0& 0&0&0& \hspace{2ex}&0& 0& 0&0&0\\
+1 & 1 &0 &0&0 && 1& \half &\half&0&0\\
+1 & \half & \half & 0&0 && 1 & \half & 0 & \half&0 \\
+1 & \half & 0 & \half & 0 && 1 & \half & 0 & 0 & \half \\
+\cline{1-5} \cline{7-11}
+ & \half & 0 & \half & 0 &&  & \half & 0 & 0 & \half \\
+\end{tabular}
+\end{minipage}
+
+\includegraphics[width=0.32\linewidth]{\HOME/projects/gungHo/IMEXRK/octave/CN1.pdf}
+\pauseHS
+\includegraphics[width=0.32\linewidth]{\HOME/projects/gungHo/IMEXRK/octave/HN_CN2.pdf}
+\pauseHS
+\includegraphics[width=0.32\linewidth]{\HOME/projects/gungHo/IMEXRK/octave/ENDG1_RK2_CN110.pdf}
+
+\begin{list0}
+\item Explicit term ($S$) has regions of instability for all time steps
+\item This continues for 4 and 5 iterations
+\end{list0}
+
+\end{slide}
+

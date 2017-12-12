@@ -1,0 +1,52 @@
+\begin{slide}
+\heading{Computational Modes also on the Hexagonal C-grid}
+
+\begin{minipage}{0.49\linewidth}\centering
+Described by Thuburn, 2008
+\includegraphics[scale=0.75]{graphics/Thu08Mode.png}
+\pauseHS
+\end{minipage}
+\begin{minipage}{0.49\linewidth}
+Manifestation on vorticty on dual grid (using mid-point interpolation):\\
+\includegraphics[width=\linewidth]{graphics/shallowWaterSphereMesh+WilliMountain+bucky7+save+dt100_midPointpv_CN+4320000+vorticityHalfZoom.png}
+\pauseHS
+\end{minipage}
+\begin{minipage}{0.49\linewidth}\raggedright
+Controlled by new advection scheme to interpolate vorticity form vertices to edges: CLUST (Weller, MWR, 2012)\\
+\includegraphics[width=\linewidth]{graphics/shallowWaterSphereMesh+WilliMountain+bucky7+save+dt100_quadUpBlend_CN+4320000+vorticityHalfZoom.png}
+\pauseHS
+\end{minipage}
+\begin{minipage}{0.49\linewidth}\centering
+However National Centre for Atmospheric Research (USA) use APVM:\\
+\includegraphics[width=\linewidth]{graphics/shallowWaterSphereMesh+WilliMountain+bucky7+save+dt100_APVM_CN+4320000+vorticityHalfZoom.png}
+\end{minipage}
+
+\end{slide}
+
+\begin{slide}
+\vspace{2cm}
+\begin{minipage}[t]{0.49\linewidth}
+\heading{\large APVM: Anicipated Potential Vorticity Method}
+(Ringler et al, JCP, 2010)
+
+\[q_e = \frac{1}{2}(q_{u} + q_{d}) - \frac{1}{2}\vec{u}_e \dprod\nabla_e q ~ \delta t\]
+
+\input{figs/cells.pdf_t}
+\end{minipage}
+%
+\begin{minipage}[t]{0.49\linewidth}
+\heading{\large CLUST: Continuous Linear Upwind Stabilised Transport}
+(Weller, MWR, 2012)
+\ \\
+
+Mid-point: \(q_m = \frac{1}{2}(q_{u} + q_{d})\) \ \\
+
+Linear-upwind: \(q_{\ell u} = q_u + (\vec{x}_e - \vec{x}_u) \dprod \nabla_u q\) \ \\
+
+LUST: \(q_L = \frac{1}{4} q_{\ell u} + \frac{3}{4} q_m\) \ \\ \ \\
+
+CLUST: \(q_{CL} = \frac{|u_n|}{|\vec{u}_e|} q_{L} + \biggl(1 - \frac{|u_n|}{|\vec{u}_e|}\biggr) q_m\)
+
+\end{minipage}
+
+\end{slide}

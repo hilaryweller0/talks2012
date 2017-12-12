@@ -1,0 +1,32 @@
+\begin{slide}
+\heading{Conclusions on time-stepping\pauseHS}
+
+\begin{list0}
+    \item This stability analysis does not predict stability for the test-case presented
+    \pauseHS
+    \item Strong-stability preserving schemes tested not stable for implicit gravity waves ...\pauseHS
+    \item Crank-Nicolson based schemes with no splitting (and no off-centring):\pauseHS
+    \begin{list1}
+        \item accurate
+        \item stable (for this test-case)
+        \item stable for semi-implicit with/without implicit gravity waves
+       \item stable for HEVI
+    \end{list1}\pauseHS
+    \item But, for multiple implicit solutions, it would be nice if we could do better...
+    \begin{list1}
+        \item 2nd order accurate AND damping
+    \end{list1}\pauseHS
+    
+    \item No loss of accuracy with HEVI (for right time-scheme)\pauseHS
+\end{list0}
+
+
+\heading{Conclusions on Grids\pauseHS}
+
+\begin{list0}
+\item Hexagonal-icosahedral C-grid gives good results\pauseHS
+\item Mimetic finite element (discontinuous BDFM1) may be even better... but only so far presented for linear shallow-water equations
+\end{list0}
+
+\end{slide}
+

@@ -1,0 +1,2281 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+% Uncomment to print out only slides and overlays
+%
+%\onlyslides{\slides}
+
+% Uncomment to print out only notes
+%
+%\onlynotes{\notes}
+
+
+\newcommand{\nicefrac}[2]{\ensuremath ^{#1}\!\!/\!_{#2}}
+\usepackage { fancybox}
+\usepackage{tweaklist}
+\renewcommand{\itemhook}
+{
+    \setlength{\topsep}{2pt}
+    \setlength{\parsep}{2pt}
+    \setlength{\itemsep}{2pt}
+    \setlength{\labelwidth}{1ex}
+    \setlength{\leftmargin}{3ex}
+    \raggedright
+}
+\usepackage[pdftex]{graphicx,color}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\footskip 1cm
+\secnumdepth 5
+\tocdepth 5
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Shallow Water Test Case on a Beta Plane with Dynamic Adaptivity
+\end_layout
+
+\begin_layout Author
+Hilary Weller <h.weller@reading.ac.uk>
+\end_layout
+
+\begin_layout Date
+4/10/12
+\end_layout
+
+\begin_layout Section
+Test Case Definition
+\end_layout
+
+\begin_layout Standard
+This test case is to be undertaken using a variety of shallow water models
+ which use different forms of dynamic adaptivity, such as nested refinement
+ (often called adaptive mesh refinement, AMR or non-conforming refinement),
+ unstructured refinement (using arbitrarily structured grids of triangles
+ or polygons) or r-adaptivity (mesh movement or mesh redistribution without
+ changing the topology).
+ Since not all of the participating models represent a sphere, a barotropically
+ unstable jet on a 
+\begin_inset Formula $\beta$
+\end_inset
+
+ plane is used.
+ The jet is defined to be similar to the 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "GSP04"
+
+\end_inset
+
+ jet but on a plane rather than on a sphere.
+ 
+\end_layout
+
+\begin_layout Standard
+The models should all solve the non-linear shallow water equations on a
+ 
+\begin_inset Formula $\beta$
+\end_inset
+
+ plane.
+ They are given here in advective form but this can be model dependent:
+ 
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{\partial u}{\partial t}+\mathbf{u}\cdot\nabla u & = & \phantom{+}fv-g\frac{\partial h}{\partial x}\\
+\frac{\partial v}{\partial t}+\mathbf{u}\cdot\nabla v & = & -fu-g\frac{\partial h}{\partial y}\\
+\frac{\partial h}{\partial t}+\mathbf{u}\cdot\nabla h & + & h\nabla\cdot\mathbf{u}=0
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ and the velocities in the 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ directions, 
+\begin_inset Formula $\mathbf{u}=\left(\begin{array}{c}
+u\\
+v
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $h$
+\end_inset
+
+ is the shallow water height and 
+\begin_inset Formula $f=\beta y$
+\end_inset
+
+ is the Coriolis and 
+\begin_inset Formula $g$
+\end_inset
+
+ is the acceleration due to gravity.
+\end_layout
+
+\begin_layout Subsection
+Analytic solution: a geostrophically balanced, compact jet
+\end_layout
+
+\begin_layout Standard
+An analytic solution of the shallow water equations on a 
+\begin_inset Formula $\beta$
+\end_inset
+
+ plane consisting of a compact, zonal jet with zero first and second derivatives
+ at the edges is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\hat{y}) & = & \begin{cases}
+u_{0}\left(1-3\hat{y}^{2}+3\hat{y}^{4}-\hat{y}^{6}\right) & \text{for }-1\le\hat{y}\le1\\
+0 & \text{otherwise}
+\end{cases}\\
+v & = & 0\\
+h\left(\hat{y}\right) & = & \begin{cases}
+h_{0} & \textnormal{for }\hat{y}\le-1\\
+h_{0}-\frac{w\beta u_{0}}{g}\begin{array}[t]{l}
+\biggl\{ y_{c}\left(\frac{16}{35}+\hat{y}-\hat{y}^{3}+\frac{3}{5}\hat{y}^{5}-\frac{1}{7}\hat{y}^{7}\right)\\
++w\left(-\frac{1}{8}+\frac{1}{2}\hat{y}^{2}-\frac{3}{4}\hat{y}^{4}+\frac{1}{2}\hat{y}^{6}-\frac{1}{8}\hat{y}^{8}\right)\biggr\}
+\end{array} & \textnormal{for }-1\le\hat{y}\le1\\
+h_{0}-\frac{32}{35}\frac{w\beta u_{0}y_{c}}{g} & \textnormal{for }\hat{y}\ge1
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\hat{y}=\frac{y-y_{c}}{w}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{c}$
+\end_inset
+
+ is the 
+\begin_inset Formula $y$
+\end_inset
+
+ position of the jet centre, 
+\begin_inset Formula $w$
+\end_inset
+
+ is the jet half width, 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is the maximum jet velocity and 
+\begin_inset Formula $h_{0}$
+\end_inset
+
+ is the minimum height.
+ This is the same analytic solution used for the test case with static refinemen
+t.
+ 
+\end_layout
+
+\begin_layout Subsection
+Initial Perturbation
+\end_layout
+
+\begin_layout Standard
+In order to trigger barotropic instability in a reproducible way, an initial
+ perturbation is added to the height in a similar manner to 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "GSP04"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+h\left(x,y\right)\rightarrow h\left(\hat{y}\right)+\hat{h}\cos^{2}\left(\tfrac{\pi}{2}\hat{y}\right)e^{-\left(\frac{x-x_{c}}{w_{x}}\right)^{2}}e^{-\left(\frac{y-y_{c}}{w_{y}}\right)^{2}}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\hat{h}$
+\end_inset
+
+ is the maximum perturbation height, 
+\begin_inset Formula $\left(x_{c},y_{c}\right)$
+\end_inset
+
+ is the centre of the perturbation (being co-located with the jet centre)
+ and 
+\begin_inset Formula $w_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{y}$
+\end_inset
+
+ are the scaling widths of the perturbation in the 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ directions.
+ The values of all parameters are given in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Parameter-Values"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Geometry
+\end_layout
+
+\begin_layout Standard
+The domain extends a distance 
+\begin_inset Formula $8a$
+\end_inset
+
+ in the 
+\begin_inset Formula $x$
+\end_inset
+
+ direction and 
+\begin_inset Formula $2a$
+\end_inset
+
+ in the 
+\begin_inset Formula $y$
+\end_inset
+
+ direction with 
+\begin_inset Formula $y=0$
+\end_inset
+
+ representing the equator and thus has 
+\begin_inset Formula $f=0$
+\end_inset
+
+.
+ The boundaries at 
+\begin_inset Formula $y=0,\ 2a$
+\end_inset
+
+ are no normal flow (
+\begin_inset Formula $v=0$
+\end_inset
+
+) and the boundaries at 
+\begin_inset Formula $x=0,\ 8a$
+\end_inset
+
+ are periodic.
+ This test case can be run on an initially completely aligned, orthogonal
+ grid.
+ However in order to mimic the distortions in a mesh of the sphere that
+ occur, for example, in a cubed sphere, a mesh should include grid-lines
+ which change direction by at least 
+\begin_inset Formula $60^{o}$
+\end_inset
+
+ such as in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:longMesh"
+
+\end_inset
+
+.
+ The vertices and vertex connectivity of this mesh is given at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.met.reading.ac.uk/~sws02hs/inProgress/NewtonSWtestCases/longMesh.obj
+\end_layout
+
+\end_inset
+
+ (with vertices numbered from 1).
+ The mesh used for a numerical simulation can be refined from this mesh.
+ If hexagonal or triangular meshes are used they should also reflect the
+ need to mesh the sphere so there should be at least 5 pentagons in a hexagonal
+ mesh or five triangles meeting at a point for triangular meshes.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{figs/longMesh.pdf_t}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The block structure of a mesh on a plane with angles similar to a cubed
+ sphere.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:longMesh"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Parameter Values
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Parameter-Values"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All of the parameter values are defined in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:paramVals"
+
+\end_inset
+
+.
+ Jun-ichi Yano (personal communication, 2012) has estimated that, for low
+ Froude number, this jet will be barotropically unstable if 
+\begin_inset Formula $\frac{w^{2}\beta}{u_{0}}<\frac{4}{5}$
+\end_inset
+
+.
+ The parameter values are chosen so that we are close to but below this
+ limit.
+ Without the initial perturbation, these parameter values give the profiles
+ of height, velocity and relative vorticity (
+\begin_inset Formula $\xi$
+\end_inset
+
+) shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:jetProfile"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="4">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gravitational acceleration
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $g$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{ms}^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of Coriolis with 
+\begin_inset Formula $y$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2\times10^{-11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{s}^{-1}\text{m}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximum wind speed
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+80
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{ms}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Geometry parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6\times10^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+m
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jet width parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $w$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{a}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+m
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Jet centre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+m
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Minimum shallow water height
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $h_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+m
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Perturbation maximum height
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\hat{h}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+120
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+m
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Perturbation centre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(x_{c},y_{c})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(4a,a)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(m,m)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Perturbation scaling widths
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(w_{x},w_{y})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(1.5\times10^{6},2\times10^{6})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(m,m)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total run length
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+days
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Domain limits
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0\rightarrow8a,\ 0\rightarrow2a)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+m
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Parameter values for the mesh adaptivity, shallow water test
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:paramVals"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/thinJetProfile.pdf
+	width 75text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:jetProfile"
+
+\end_inset
+
+Values of velocity, height and relative vorticity for the initial, unperturbed
+ jet
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results 
+\end_layout
+
+\begin_layout Standard
+The relative vorticity 
+\begin_inset Formula $\xi$
+\end_inset
+
+ in the entire domain is shown in figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vort_orthog"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vort_cube"
+
+\end_inset
+
+ for days 1 to 20 after initialisation.
+ The simulation in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vort_orthog"
+
+\end_inset
+
+ uses a regular, orthogonal and uniform Cartesian grid of 
+\begin_inset Formula $400\times100$
+\end_inset
+
+ finite volumes using a C-grid staggered version of OpenFOAM with quadratic
+ differencing.
+ It is therefore not a challenge to reproduce the unperturbed stretch of
+ the jet out to day 7 or 8 using this model.
+ The simulation in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:vort_cube"
+
+\end_inset
+
+ uses a cubed-sphere like grid of 
+\begin_inset Formula $400\times100$
+\end_inset
+
+ finite volumes based on the structure in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:longMesh"
+
+\end_inset
+
+ and with velocity and height co-located with 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "RC83"
+
+\end_inset
+
+ regularization and quadratic differencing.
+ With the non-orthogonal cells, the non-alignment of the initial jet with
+ the mesh and the abrupt changes of direction of the mesh, the barotropic
+ instability is released 3 days earlier than it should be.
+ This is thus a significant challenge for any non lat-lon model (or a challenge
+ for a lat-lon model if the jet were rotated with respect to the lat-lon
+ grid).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/86400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/950400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/172800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1036800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/259200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1123200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/345600/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1296000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/432000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1382400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/518400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1468800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/604800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1555200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/691200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1641600/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/777600/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1728000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/864000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/1814400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/legends/vorticity_vorticityz.png
+	lyxscale 20
+	width 90text%
+
+\end_inset
+
+
+\begin_inset Formula $\text{s}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Relative Vorticity of the barotropically unstable jet calculated using an
+ orthogonal mesh of 
+\begin_inset Formula $400\times100$
+\end_inset
+
+ finite volumes using a C-grid staggered version of OpenFOAM with quadratic
+ differencing from day 1 to 20 after initialisation.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vort_orthog"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/86400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/950400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/172800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1036800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/259200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1123200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/345600/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1296000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/432000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1382400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/518400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1468800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/604800/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1555200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/691200/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1641600/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/777600/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1728000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/864000/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/cubeSphere/100x400/1814400/vorticity.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/orthog/100x400/legends/vorticity_vorticityz.png
+	lyxscale 20
+	width 90text%
+
+\end_inset
+
+
+\begin_inset Formula $\text{s}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Relative Vorticity of the barotropically unstable jet calculated using a
+ non-orthogonal, cubed-sphere like mesh of 
+\begin_inset Formula $400\times100$
+\end_inset
+
+ finite volumes using a co-located version of OpenFOAM with quadratic differenci
+ng from day 1 to 20 after initialisation.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:vort_cube"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The evolution of the release of instability can be summarised by calculating
+ the root mean square of the gradient of the vorticity in the 
+\begin_inset Formula $x$
+\end_inset
+
+ direction (
+\begin_inset Formula $\frac{1}{A}\sqrt{\sum_{i}\left(A_{i}\frac{\partial\xi}{\partial x}_{i}\right)^{2}}$
+\end_inset
+
+ where 
+\begin_inset Formula $A$
+\end_inset
+
+ is the total area, the sum is over all the areas on which 
+\begin_inset Formula $\frac{\partial\xi}{\partial x}$
+\end_inset
+
+ is calculated and 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+ is each area).
+ This diagnostic is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:dVortdx_dofs"
+
+\end_inset
+
+ for the simulations using both grids as a function of time.
+ The total number of degrees of freedom divided by three per time step should
+ also be reported (as in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:dVortdx_dofs"
+
+\end_inset
+
+).
+ The total number of degrees of freedom includes degrees of freedom for
+ height and velocity.
+ Hence it is divided by three to give (approximately) the number of computationa
+l points.
+ This value should also be summed for each time step to give the total number
+ of degrees of freedom used over the whole simulation.
+ For a fixed grid this is simply the degrees of freedom multiplied by the
+ number of time steps.
+ The simulations presented use a time step of 300s for 24 days and 
+\begin_inset Formula $400\times100$
+\end_inset
+
+ cells so the integrated degrees of freedom is 
+\begin_inset Formula $3\times\frac{24\times86400}{300}\times400\times100=3\times2.7648\times10^{8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/plots/dVortdy.pdf
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/hilary/OpenFOAM/hilary-2.1.0/run/shallowWaterPlane/unstableJet/plots/dofs.pdf
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Left: root mean square gradient of the vorticity in the 
+\begin_inset Formula $x$
+\end_inset
+
+ direction as a function of days for the simulations using both grids.
+ The vorticity gradient is multiplied by 
+\begin_inset Formula $10^{11}$
+\end_inset
+
+ and has units 
+\begin_inset Formula $\text{m}^{-1}\text{s}^{-1}$
+\end_inset
+
+.
+ Right: a third of the total number of (height plus velocity) degrees of
+ freedom per time step (ie the number of computational points) as a function
+ of day.
+ This is constant since these simulations do not use dynamic adaptivity.
+ The integrated number of degrees of freedom (ie degrees of freedom 
+\begin_inset Formula $\times$
+\end_inset
+
+ number of time steps) over the 24 days is 
+\begin_inset Formula $3\times2.7648\times10^{8}$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:dVortdx_dofs"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Summary of the Numerical Method
+\end_layout
+
+\begin_layout Standard
+The salient points of the numerical method, the remeshing strategy, mesh
+ to mesh interpolation and the refinement criterion should be listed with
+ references to more detailed descriptions.
+ The summary should include the following:
+\end_layout
+
+\begin_layout Itemize
+Discretisation type (eg finite element, discontinuous Galerkin, finite volume,
+ spectral etc)
+\end_layout
+
+\begin_layout Itemize
+Prognostic variables used and their placement on the mesh
+\end_layout
+
+\begin_layout Itemize
+Number of degrees of freedom per element or stencil sizes for the operators
+\end_layout
+
+\begin_layout Itemize
+Order of accuracy of the approximations for all of the spatial operators
+ and special techniques for each operator
+\end_layout
+
+\begin_layout Itemize
+Theoretical mimetic properties
+\end_layout
+
+\begin_layout Itemize
+Mimetic properties of the mesh to mesh interpolation (ie what is conserved)
+\end_layout
+
+\begin_layout Itemize
+A brief description of the mesh generation technique used for re-meshing
+\end_layout
+
+\begin_layout Itemize
+Details of any special coupling between mesh regions of different resoluiton
+\end_layout
+
+\begin_layout Itemize
+Details of the refinement criterion and the re-meshing frequency.
+\end_layout
+
+\begin_layout Itemize
+Any limiters used
+\end_layout
+
+\begin_layout Itemize
+Time-stepping schemes for each of the terms
+\end_layout
+
+\begin_layout Itemize
+Time steps used for each term of the equations
+\end_layout
+
+\begin_layout Itemize
+Maximum theoretical time-steps
+\end_layout
+
+\begin_layout Itemize
+The size, number and condition number of any matrix solutions (eg mass matrices
+ or linearised Helmholtz equations)
+\end_layout
+
+\begin_layout Itemize
+The linear equation solvers and pre-conditioners
+\end_layout
+
+\begin_layout Itemize
+Number of calls to the solvers per time step
+\end_layout
+
+\begin_layout Itemize
+Typical number of iterations per solver call
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "numerics"
+options "abbrvnat"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

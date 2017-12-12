@@ -1,0 +1,113 @@
+\begin{slide}
+\heading{Semi-implicit solution of the equations of motion}
+
+Simplified equations of motion: Compressible Boussinesq (Durran)
+\\ \ \\
+
+\begin{center}
+\begin{tabular}{cccccccc}
+\color{red}$\frac{\partial}{\partial t} \begin{pmatrix}u\\w\end{pmatrix}$&
+$+$&
+$\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla
+\begin{pmatrix}u\\w\end{pmatrix}$ &
+$+\color{red}\nabla P$ &
+$=$&
+\color{blue}$\begin{pmatrix}0\\b\end{pmatrix}$&
+$+$&
+$\nabla\negthinspace\times\negthinspace\Psi$
+\\
+\color{red}velocity && velocity & \color{red}pressure && \color{blue}buoyancy && streamfunction\\
+\color{red}evolution && advection & \color{red}gradient && && forcing\pauseHS
+\\ \\
+\color{blue}$\frac{\partial b}{\partial t}$&
+$+$&
+$\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla b$ &
+$\color{blue}+N^2 w$ &
+$=$&
+$0$\\
+\color{blue}buoyancy && buoyancy &
+\multicolumn{5}{l}{\color{blue}vertical advection of the}\\
+\color{blue}evolution&& advection &
+\multicolumn{5}{l}{\color{blue}background stratification}\pauseHS
+\\
+\ \\
+\color{red}$\frac{\partial P}{\partial t}$&
+$+$&
+$\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla P$ &
+\color{red}$+c_s^2 \nabla\dprod \begin{pmatrix}u\\w\end{pmatrix}$ &
+$=$&
+$0$\\
+\color{red}Pressure && Pressure & \color{red}divergence \\
+\color{red}evolution&& advection\pauseHS \\
+\ \\
+\color{red} acoustic and &&  \color{red}very & \color{blue}just & \color{blue} fast && slow\\
+\color{red}gravity waves && \color{red}fast  & \color{blue}gravity\\
+
+\end{tabular}
+\end{center}
+
+\end{slide}
+
+\begin{slide}
+\heading{Semi-implicit solution of the equations of motion}
+To treat acoustic waves implicitly, substitute velocity equation into pressure equation to give Helmholtz equation:\pauseHS
+
+\ \\
+
+\begin{center}
+\begin{tabular}{cccccccccc}
+$\nabla\dprod\biggl($ &
+\color{red}$\frac{\partial}{\partial t} \begin{pmatrix}u\\w\end{pmatrix}$&
+$+$&
+$\begin{pmatrix}u\\\end{pmatrix} \dprod \nabla
+\begin{pmatrix}u\\w\end{pmatrix}$ &
+$+\color{red}\nabla P$ &
+$=$&
+\color{blue}$\begin{pmatrix}0\\b\end{pmatrix}$&
+$+$&
+$\nabla\negthinspace\times\negthinspace\Psi$&
+$\biggl)$
+\pauseHS\\
+\ \\
+$\frac{\partial}{\partial t} \biggl($&
+\color{red}$\frac{\partial P}{\partial t}$&
+$+$&
+$\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla P$ &
+\color{red}$+c_s^2 \nabla\dprod \begin{pmatrix}u\\w\end{pmatrix}$ &
+$=$&
+$0$&
+$\biggr)$\pauseHS\\
+&&&$\downarrow$\\
+\end{tabular}
+$\frac{\partial^2 {\color{purple}P}}{\partial t^2}
++\frac{\partial}{\partial t}
+\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla P
++c_s^2 \nabla\dprod 
+\biggl(
+-\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla
+\begin{pmatrix}u\\w\end{pmatrix}
++ \begin{pmatrix}0\\b\end{pmatrix}
++ \nabla\negthinspace\times\negthinspace\Psi
+\biggr)
+- c_s^2 {\color{purple}\nabla^2 P}
+=0$\\
+\end{center}
+\ \\    
+{\color{purple} Implicit solution for P\pauseHS}
+
+To treat gravity waves implicitly, first substitute the $b$ in the buoyancy equation into the velocity equation:\pauseHS\\ \ \\
+$\frac{{\color{blue} b^{n+1}} - b^n}{\Delta t}
++\begin{pmatrix}u\\w\end{pmatrix} \dprod \nabla b
++N^2 {\color{blue}w} = 0$ \\ \ \\
+
+\end{slide}
+
+\begin{slide}
+\heading{Semi-implicit Solution}
+
+\begin{list0}
+\item large sparse matrices which can be solved efficiently using iterative solvers\pauseHS
+\item much larger time steps (limited by advection rather than speed of acoustic or gravity waves)\pauseHS
+\item But matrix solvers require global communication which is a parallel scaling bottleneck
+\end{list0}
+\end{slide}

@@ -1,0 +1,50 @@
+\begin{slide}
+\heading{What is so good about the lat-lon grid}\pauseHS
+
+\begin{list0}
+\item Direct addressing\pauseHS
+\item High order accuracy simple and cheap\pauseHS
+\item Geostrophic balance maintained\pauseHS
+\item Good conservation properties\pauseHS
+\item Orthogonal\pauseHS
+\item Good wave dispersion can use Arakawa C-grid\pauseHS
+\end{list0}
+
+For solving wave equations (with rotation)\\
+\begin{center}\begin{tabular}{ccc}
+$\frac{\partial \vec{u}}{\partial t} + f \vec{k}\times\vec{u} = g\nabla h$ &
+\hspace{1.5cm} &
+$\frac{\partial h}{\partial t} + H \nabla\dprod\vec{u} = 0$
+\end{tabular}\end{center}
+
+\href{file:///home/hilary/latex/meetings/2012/WelshMaths/ArakawaGrids.html}
+{\begin{tabular}{ccc} A-grid & B-grid & C-grid \\
+\includegraphics[width=0.3\linewidth]{../../2011/climateSummerSchool/HilaryNotes/2dSWE/Agrid0.png}&
+\includegraphics[width=0.3\linewidth]{../../2011/climateSummerSchool/HilaryNotes/2dSWE/Bgrid0.png}&
+\includegraphics[width=0.3\linewidth]{../../2011/climateSummerSchool/HilaryNotes/2dSWE/Cgrid0.png}
+\end{tabular}}
+
+%\href{run:graphics/A.gif}{hmm}
+
+\end{slide}
+
+\begin{slide}
+\heading{Problem with lat-lon}\pauseHS
+
+\begin{list0}
+\item Convergence of meridians towards the poles\pauseHS\\
+    $\implies$ need numerical method to circumvent time-step restriction. Eg:
+    \begin{list1}
+    \item Semi-implicit
+    \item Semi-Lagrangian
+    \item Fourier filtering of short wavelengths\pauseHS
+    \end{list1}
+    
+\item In order to take longer time-step you must increase the domain of dependence\\
+    $\rightarrow$ more interprocessor communication\\
+    $\rightarrow$ scaling bottlenecks\pauseHS
+
+\item $\therefore$ we need a quasi-uniform grid
+\end{list0}
+
+\end{slide}

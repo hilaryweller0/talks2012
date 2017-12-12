@@ -1,0 +1,33 @@
+\begin{slide}
+\heading{Semi-implicit or HEVI}
+HEVI -- horizontally explicit, vertically implicit
+
+Horizontal and vertical Courant numbers, $=c\frac{\Delta t}{\Delta x}$,   $=c\frac{\Delta t}{\Delta z}$\\ \ \\
+where $c$ is the advection or wave speed \\
+
+\begin{center}
+
+\begin{tabular}{cccc}
+Using typical values & $\Delta x =$ 15km, & $\Delta z =$ 200m, & $\Delta t =$ 3 mins
+\end{tabular}
+\ \\ \ \\
+
+\begin{tabular}{cc|ccc}
+Maximum &&  & \multicolumn{2}{c}{Courant numbers}\\
+ && $c$ & Horizontal & Vertical \\
+\hline
+horizontal wind: & $u$ &  80m/s & 1 & -- \\
+vertical wind:   & $w$ &  5m/s  & -- & 5 \\
+speed of sound:  & $c_s$ &  340m/s & 4 & 300 
+\end{tabular}
+
+\end{center}
+
+\begin{list0}
+\item Gravity waves restrict time step based on $\Delta t\sqrt{\frac{g}{\theta}\frac{\partial \theta}{\partial z}}$
+\item So we only really need semi-implicit solution for vertically propagating sound waves and gravity waves
+\item HEVI: Horizontally Explicit, Vertically Implicit
+\end{list0}
+
+\end{slide}
+

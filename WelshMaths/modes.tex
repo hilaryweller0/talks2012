@@ -1,0 +1,28 @@
+\begin{slide}
+\heading{Computational Modes also on the Hexagonal C-grid}
+
+\begin{minipage}{0.49\linewidth}\centering
+Described by Thuburn, 2008
+\includegraphics[scale=0.75]{graphics/Thu08Mode.png}
+\pauseHS
+\end{minipage}
+\begin{minipage}{0.49\linewidth}
+Manifestation on vorticty on dual grid:\\
+\includegraphics[width=\linewidth]{graphics/shallowWaterSphereMesh+WilliMountain+bucky7+save+dt100_midPointpv_CN+4320000+vorticityHalfZoom.png}
+\pauseHS
+\end{minipage}
+\begin{minipage}{0.49\linewidth}\raggedright
+Controlled by monotonic advection scheme to interpolate vorticity form vertices to edges. Eg van Leer:\\
+\includegraphics[width=\linewidth]{graphics/shallowWaterSphereMesh+WilliMountain+bucky7+save+dt100_vanLeer_CN+4320000+vorticityHalfZoom.png}
+\pauseHS
+\end{minipage}
+\begin{minipage}{0.49\linewidth}\centering
+However National Centre for Atmospheric Research (USA) use APVM:\\
+\includegraphics[width=\linewidth]{graphics/shallowWaterSphereMesh+WilliMountain+bucky7+save+dt100_APVM_CN+4320000+vorticityHalfZoom.png}
+\end{minipage}
+
+\end{slide}
+
+\begin{slide}
+\includegraphics[angle=270, width=1.01\linewidth]{gridResults2.pdf}
+\end{slide}

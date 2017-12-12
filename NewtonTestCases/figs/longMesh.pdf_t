@@ -1,0 +1,31 @@
+\begin{picture}(0,0)%
+\includegraphics{figs/longMesh.pdf}%
+\end{picture}%
+\setlength{\unitlength}{3315sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(10053,3183)(-198,-5437)
+\put(9271,-2416){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(8a,2a)}%
+}}}}
+\put(822,-2401){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(0,2a)}%
+}}}}
+\put(871,-5026){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(0,0)}%
+}}}}
+\put(9181,-4996){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(8a,0)}%
+}}}}
+\put(9297,-3354){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(8a, a$(1,+\frac{1}{2\sqrt{3}})$)}%
+}}}}
+\put(-183,-3399){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(0, a$(1,+\frac{1}{2\sqrt{3}})$)}%
+}}}}
+\put(2682,-5334){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(a, a$(1,-\frac{1}{2\sqrt{3}})$)}%
+}}}}
+\put(6342,-5364){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(5a, a$(1,-\frac{1}{2\sqrt{3}})$)}%
+}}}}
+\put(4392,-5349){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{12.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(3a, a$(1,-\frac{1}{2\sqrt{3}})$)}%
+}}}}
+\end{picture}%

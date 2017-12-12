@@ -1,0 +1,1006 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+% Uncomment to print out only slides and overlays
+%
+%\onlyslides{\slides}
+
+% Uncomment to print out only notes
+%
+%\onlynotes{\notes}
+
+
+\newcommand{\nicefrac}[2]{\ensuremath ^{#1}\!\!/\!_{#2}}
+\usepackage { fancybox}
+\usepackage{tweaklist}
+\renewcommand{\itemhook}
+{
+    \setlength{\topsep}{2pt}
+    \setlength{\parsep}{2pt}
+    \setlength{\itemsep}{2pt}
+    \setlength{\labelwidth}{1ex}
+    \setlength{\leftmargin}{3ex}
+    \raggedright
+}
+\usepackage[pdftex]{graphicx,color}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding default
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\footskip 1cm
+\secnumdepth 5
+\tocdepth 5
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Shallow Water Test Cases with Static Refinement
+\end_layout
+
+\begin_layout Author
+Hilary Weller <h.weller@reading.ac.uk>
+\end_layout
+
+\begin_layout Date
+4/10/12
+\end_layout
+
+\begin_layout Section
+Definition of Resolution and Refinement
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:rhoDefn"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The mesh density is defined as 
+\begin_inset Formula $\rho=\frac{\text{dof}}{3A}$
+\end_inset
+
+ where dof is the total number of degrees of freedom of the shallow water
+ model over a region with area 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ The factor of 3 is because dof includes all velocity and height degrees
+ of freedom, so dividing dof by 
+\begin_inset Formula $3A$
+\end_inset
+
+ to give 
+\begin_inset Formula $\rho$
+\end_inset
+
+ gives approximate grid points per unit area.
+ Therefore 
+\begin_inset Formula $1/\sqrt{\rho}$
+\end_inset
+
+ is the equivalent mesh spacing.
+\end_layout
+
+\begin_layout Itemize
+A region refined a factor of 
+\begin_inset Formula $k$
+\end_inset
+
+ will have 
+\begin_inset Formula $\rho_{r}=k^{2}\rho_{c}$
+\end_inset
+
+ where 
+\begin_inset Formula $\rho_{c}$
+\end_inset
+
+ is the mesh density in the coarse region
+\end_layout
+
+\begin_layout Section
+Test Case on a Plane
+\end_layout
+
+\begin_layout Standard
+Non-linear shallow water equations on a 
+\begin_inset Formula $\beta$
+\end_inset
+
+ plane: (advective form but model dependent)
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{\partial u}{\partial t}+\mathbf{u}\cdot\nabla u & = & \phantom{+}fv-g\frac{\partial h}{\partial x}\\
+\frac{\partial v}{\partial t}+\mathbf{u}\cdot\nabla v & = & -fu-g\frac{\partial h}{\partial y}\\
+\frac{\partial h}{\partial t}+\mathbf{u}\cdot\nabla h & + & h\nabla\cdot\mathbf{u}=0
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ and the velocities in the 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ directions, 
+\begin_inset Formula $\mathbf{u}=\left(\begin{array}{c}
+u\\
+v
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $h$
+\end_inset
+
+ is the shallow water height and 
+\begin_inset Formula $f=\beta y$
+\end_inset
+
+ is the Coriolis and 
+\begin_inset Formula $g$
+\end_inset
+
+ is the acceleration due to gravity.
+\end_layout
+
+\begin_layout Subsection*
+Analytic solution: a geostrophically balanced, compact jet
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+u(\hat{y}) & = & \begin{cases}
+u_{0}\left(1-3\hat{y}^{2}+3\hat{y}^{4}-\hat{y}^{6}\right) & \text{for }-1\le\hat{y}\le1\\
+0 & \text{otherwise}
+\end{cases}\\
+v & = & 0\\
+h\left(\hat{y}\right) & = & \begin{cases}
+h_{0} & \textnormal{for }\hat{y}\le-1\\
+h_{0}-\frac{w\beta u_{0}}{g}\begin{array}[t]{l}
+\biggl\{ y_{c}\left(\frac{16}{35}+\hat{y}-\hat{y}^{3}+\frac{3}{5}\hat{y}^{5}-\frac{1}{7}\hat{y}^{7}\right)\\
++w\left(-\frac{1}{8}+\frac{1}{2}\hat{y}^{2}-\frac{3}{4}\hat{y}^{4}+\frac{1}{2}\hat{y}^{6}-\frac{1}{8}\hat{y}^{8}\right)\biggr\}
+\end{array} & \textnormal{for }-1\le\hat{y}\le1\\
+h_{0}-\frac{32}{35}\frac{w\beta u_{0}y_{c}}{g} & \textnormal{for }\hat{y}\ge1
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\hat{y}=\frac{y-y_{c}}{w}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{c}$
+\end_inset
+
+ is the 
+\begin_inset Formula $y$
+\end_inset
+
+ position of the jet centre, 
+\begin_inset Formula $w$
+\end_inset
+
+ is the jet half width, 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is the maximum jet velocity and 
+\begin_inset Formula $h_{0}$
+\end_inset
+
+ is the minimum height.
+ The jet velocity and height as a function of 
+\begin_inset Formula $y$
+\end_inset
+
+ using the parameter values in the table below are shown in figure 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename figs/jetProfile.pdf
+	lyxscale 50
+	width 75text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Profile of height, 
+\begin_inset Formula $h$
+\end_inset
+
+, and velocity, 
+\begin_inset Formula $u$
+\end_inset
+
+, in the geostrophically balanced jet
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An analytic solution of the shallow water equations on a 
+\begin_inset Formula $\beta$
+\end_inset
+
+ plane consisting of a compact, zonal jet with zero first and second derivatives
+ at the edges is given by:
+\end_layout
+
+\begin_layout Subsection
+Mesh and Problem specifications
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\hat{y}=\frac{y-y_{c}}{w}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="left" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{figs/jet.pdf_t}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a=6\times10^{6}\text{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{0}=20\text{ms}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y_{c}=a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $w=\frac{a}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $g=10\text{ms}^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta=2\times10^{-11}\text{s}^{-1}\text{m}^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $h_{0}=3000\text{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace 6cm
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The geometry is defined as in the above figure and goes from 
+\begin_inset Formula $x=0\rightarrow2a$
+\end_inset
+
+ and 
+\begin_inset Formula $y=0\rightarrow2a$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+The resolution must conform to two specifications, 
+\begin_inset Formula $\rho_{c}$
+\end_inset
+
+, the mesh density in the coarse region and 
+\begin_inset Formula $\rho_{r}$
+\end_inset
+
+, the mesh density in the refined region.
+ The coarse region must include at least the region between 
+\begin_inset Formula $x=a/4$
+\end_inset
+
+ and 
+\begin_inset Formula $x=3a/4$
+\end_inset
+
+ for all 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ The refined region must include at least the circle centered at 
+\begin_inset Formula $\left(3a/2,\ 3a/4\right)$
+\end_inset
+
+with radius 
+\begin_inset Formula $a/4$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The refined region can be larger than this to allow for your refinement
+ technique (ie blocks, unstructured, smooth etc) but the smoother you make
+ it the more unnecessary degrees of freedom you will add.
+\end_layout
+
+\begin_layout Itemize
+There should be four meshes for every resolution, with 
+\begin_inset Formula $\rho_{r}=k^{2}\rho_{c}$
+\end_inset
+
+ with 
+\begin_inset Formula $k=1,2,4$
+\end_inset
+
+ and 
+\begin_inset Formula $8$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The standard resolution is 
+\begin_inset Formula $\rho_{c}=\frac{100\times100}{4a^{2}}$
+\end_inset
+
+ where 
+\begin_inset Formula $4a^{2}$
+\end_inset
+
+ is the area of the domain.
+\end_layout
+
+\begin_layout Itemize
+For convergence with resolution, value of 
+\begin_inset Formula $\rho_{c}$
+\end_inset
+
+ of 
+\begin_inset Formula $\frac{24\times24}{4a^{2}}$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{50\times50}{4a^{2}}$
+\end_inset
+
+, and 
+\begin_inset Formula $\frac{200\times200}{4a^{2}}$
+\end_inset
+
+ should also be used.
+\end_layout
+
+\begin_layout Itemize
+Cyclic in x direction
+\end_layout
+
+\begin_layout Itemize
+No normal flow (slip walls) in y direction, ie 
+\begin_inset Formula $v=0$
+\end_inset
+
+ 
+\begin_inset Formula $\implies\frac{\partial h}{\partial y}=-\frac{fu}{g}$
+\end_inset
+
+ at 
+\begin_inset Formula $y=0,\ 2a$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The test case can be run on a uniform, aligned, orthogonal grid.
+ This will give useful information about the impact of refinement.
+ This should be compared with a grid designed to reflect the need to grid
+ a sphere.
+ Eg:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+non-orthogonal blocks with angles of up to 
+\begin_inset Formula $120^{o}$
+\end_inset
+
+ (this can be done by moving the edge of a grid line up to 
+\begin_inset Formula $\frac{a}{2}\left(1+\frac{1}{2\sqrt{3}}\right)$
+\end_inset
+
+ and the centre of the same grid line down to 
+\begin_inset Formula $\frac{a}{2}\left(1-\frac{1}{2\sqrt{3}}\right)$
+\end_inset
+
+.) 
+\end_layout
+
+\begin_layout Itemize
+a mix of hexagons and pentagons and possibly other shapes
+\end_layout
+
+\begin_layout Itemize
+triangles with 5 or 6 vertex neighbours
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The simulation is run for 
+\begin_inset Formula $6\times10^{5}s$
+\end_inset
+
+ (one complete revolution)
+\end_layout
+
+\begin_layout Standard
+The initial conditions on the grid with 
+\begin_inset Formula $\rho_{c}=\frac{50\times50}{4a^{2}}$
+\end_inset
+
+ with 
+\begin_inset Formula $k=2$
+\end_inset
+
+ are shown below (only every 25th vector is shown)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename graphics/cubeSphere_r_50x50_0_hU.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Test Cases on the Sphere
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset citation
+LatexCommand citet
+key "WDH+92"
+
+\end_inset
+
+ test cases 2, 3 and 5 with and without a statically refined region
+\end_layout
+
+\begin_layout Itemize
+The steady state test cases should be run for 12 days.
+ The mountain test case should be run for 15 days
+\end_layout
+
+\begin_layout Itemize
+The minimum size of the statically refined region is the mountain area from
+ test case 5.
+ 
+\end_layout
+
+\begin_layout Itemize
+The mountain must be centered on a special point of the mesh (ie a cube
+ corner, a pole of a rotated lat-log grid or a pentagon).
+ This is probably not important, except for a lat-lon grid.
+\end_layout
+
+\begin_layout Itemize
+The coarse region must cover at least the antipodal hemisphere to the mountain.
+\end_layout
+
+\begin_layout Itemize
+The standard coarse resolution should be close to 
+\begin_inset Formula $\rho_{c}=\frac{10^{4}}{3\times4\pi a^{2}}$
+\end_inset
+
+ where 
+\begin_inset Formula $a$
+\end_inset
+
+ is the radius of the earth (ie 
+\begin_inset Formula $10^{4}/3$
+\end_inset
+
+ cells for a finite volume mesh with 
+\begin_inset Formula $k=1$
+\end_inset
+
+, see definition of mesh density in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:rhoDefn"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+There should be four meshes for every resolution, with 
+\begin_inset Formula $\rho_{r}=k^{2}\rho_{c}$
+\end_inset
+
+ with 
+\begin_inset Formula $k=1,2,4$
+\end_inset
+
+ and 
+\begin_inset Formula $8$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For convergence with resolution, values of 
+\begin_inset Formula $\rho_{c}$
+\end_inset
+
+ of around 
+\begin_inset Formula $\frac{2\times10^{3}}{3\times4\pi a^{2}}$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{4\times10^{4}}{3\times4\pi a^{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{2\times10^{5}}{3\times4\pi a^{2}}$
+\end_inset
+
+ should also be used.
+\end_layout
+
+\begin_layout Section
+Diagnostics 
+\end_layout
+
+\begin_layout Itemize
+Height, velocity and vorticity differences from the initial conditions (errors)
+ should be plotted for the standard resolution for all values of 
+\begin_inset Formula $k$
+\end_inset
+
+ at the end of the simulation.
+ 
+\end_layout
+
+\begin_layout Itemize
+For the standard resolutions for all values of 
+\begin_inset Formula $k$
+\end_inset
+
+, the following global diagnostics should be graphed as a function of time
+ for all time steps:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Absolute values of normalised mass, energy, enstrophy and potential vorticity
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+before "as defined by"
+key "WDH+92"
+
+\end_inset
+
+ with a log y-scale with negative values dashed
+\end_layout
+
+\begin_layout Itemize
+For the steady state test cases, error norms 
+\begin_inset Formula $\ell_{2}(h)$
+\end_inset
+
+, 
+\begin_inset Formula $\ell_{\infty}(h)$
+\end_inset
+
+, 
+\begin_inset Formula $\ell_{2}(u)$
+\end_inset
+
+ and 
+\begin_inset Formula $\ell_{\infty}(u)$
+\end_inset
+
+ as defined by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "WDH+92"
+
+\end_inset
+
+ with a log y-scale
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Graphs of 
+\begin_inset Formula $\ell_{2}(h)$
+\end_inset
+
+, 
+\begin_inset Formula $\ell_{\infty}(h)$
+\end_inset
+
+, 
+\begin_inset Formula $\ell_{2}(u)$
+\end_inset
+
+ and 
+\begin_inset Formula $\ell_{\infty}(u)$
+\end_inset
+
+ convergence with resolution.
+ The graphs should be log-log and include lines showing typical convergence
+ rates.
+ Two forms should be presented, one with 
+\begin_inset Formula $1000/\sqrt{\rho_{c}}$
+\end_inset
+
+ (in km) on the x-axis and the other with the total number of dofs on the
+ x-axis.
+ (The form with 
+\begin_inset Formula $1000/\sqrt{\rho_{c}}$
+\end_inset
+
+ on the x-axis shows the affect of refinement on the accuracy, the form
+ with dofs on the x-axis allows for comparison between methods with different
+ mesh refinement strategies.)
+\end_layout
+
+\begin_layout Section
+Summary of the Numerical Method
+\end_layout
+
+\begin_layout Standard
+The salient points of the numerical method should be listed with references
+ to more detailed descriptions.
+ The summary should include the following:
+\end_layout
+
+\begin_layout Itemize
+Form of the equations solved (ie flux, advective or vector invariant form)
+\end_layout
+
+\begin_layout Itemize
+Discretisation type (eg finite element, discontinuous Galerkin, finite volume,
+ spectral etc)
+\end_layout
+
+\begin_layout Itemize
+Prognostic variables used and their placement on the mesh
+\end_layout
+
+\begin_layout Itemize
+Number of degrees of freedom per element or stencil sizes for the operators
+\end_layout
+
+\begin_layout Itemize
+Order of accuracy of the approximations for all of the spatial operators
+ and special techniques for each operator
+\end_layout
+
+\begin_layout Itemize
+Any limiters used
+\end_layout
+
+\begin_layout Itemize
+Time-stepping schemes for each of the terms
+\end_layout
+
+\begin_layout Itemize
+Time steps used for each term of the equations
+\end_layout
+
+\begin_layout Itemize
+Maximum theoretical time-steps
+\end_layout
+
+\begin_layout Itemize
+The size, number and condition number of any matrix solutions (eg mass matrices
+ or linearised Helmholtz equations)
+\end_layout
+
+\begin_layout Itemize
+The linear equation solvers and pre-conditioners
+\end_layout
+
+\begin_layout Itemize
+Number of calls to the solvers per time step
+\end_layout
+
+\begin_layout Itemize
+Typical number of iterations per solver call
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "numerics"
+options "abbrvnat"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
